@@ -44,7 +44,7 @@ def calculate_efficiency():
         messagebox.showerror("Input Error", "All the fields are not entered kindly re-check and enter")
         return
 
-    api_key = "mykey"
+    api_key = "api_key"
     weather_data = getweatherdata(api_key, city_name)
 
     if weather_data:
@@ -67,7 +67,7 @@ root.title("Solar Panel Efficiency Calculator")
 root.geometry("800x600")
 
 # Load the background image
-image = Image.open("background_image.png")  # Add the path to your image file
+image = Image.open("C:\\Users\\HP\\Pictures\\1.jpg")  # Add the path to your image file
 bg_image = ImageTk.PhotoImage(image)
 
 # Create a Label widget to display the background image
@@ -76,29 +76,38 @@ background_label.place(x=0, y=0, relwidth=1, relheight=1)  # Make the label cove
 
 # Labels and Entry fields
 city_label = tk.Label(root, text="Enter City Name:", bg="lightblue")
-city_label.place(relx=0.1, rely=0.1)  # Using place to set widget locations
+city_label.place(relx=0.1, rely=0.1)
+city_label.config(font=("Roman Bold",18))
 city_entry = tk.Entry(root, width=30, bg="orange")
+city_entry.config(font=("JOKERMAN",20))
 city_entry.place(relx=0.5, rely=0.1)
 
 power_label = tk.Label(root, text="Power Output (W):", bg="lightblue")
 power_label.place(relx=0.1, rely=0.2)
+power_label.config(font=("Roman Bold",20))
 power_entry = tk.Entry(root, width=30, bg="white", fg="darkblue")
+power_entry.config(font=("JOKERMAN",20))
 power_entry.place(relx=0.5, rely=0.2)
 
 area_label = tk.Label(root, text="Panel Area (m²):", bg="lightblue")
 area_label.place(relx=0.1, rely=0.3)
 area_entry = tk.Entry(root, width=30, bg="green")
+area_label.config(font=("signage",20))
+area_entry.config(font=("JOKERMAN",20))
 area_entry.place(relx=0.5, rely=0.3)
 
 # Button to calculate efficiency
 calculate_button = tk.Button(root, text="Calculate Efficiency", command=calculate_efficiency)
+calculate_button.config(font=("Helevetica bold",20))
 calculate_button.place(relx=0.4, rely=0.4)
 
 # Result labels
-result_label = tk.Label(root, text="", bg="lightblue")
+result_label = tk.Label(root, text="", bg="darkblue")
+result_label.config(font=("Helevetica bold",26))
 result_label.place(relx=0.3, rely=0.5)
 
 weather_label = tk.Label(root, text="", bg="lightblue")
+weather_label.config(font=("Helevetica bold",20))
 weather_label.place(relx=0.3, rely=0.6)
 
 # Start the GUI loop
