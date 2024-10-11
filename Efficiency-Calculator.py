@@ -1,9 +1,11 @@
 import requests
 import tkinter as tk
 from tkinter import messagebox
+from PIL import Image, ImageTk  # Import ImageTk for background image support
+
 
 # Function to get weather data using OpenWeatherMap API
-def get_weather_data(api_key, city_name):
+def getweatherdata(api_key, city_name):
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={api_key}&units=metric"
     response = requests.get(url)
     data = response.json()
@@ -24,28 +26,30 @@ def get_weather_data(api_key, city_name):
     else:
         return None
 
+
 # Function to calculate solar panel efficiency
 def calculate_solar_efficiency(power_output, solar_irradiance, panel_area):
     if solar_irradiance == 0 or panel_area == 0:
         return 0.0
     return (power_output / (solar_irradiance * panel_area)) * 100
 
+
 # Function to get data from input fields and calculate efficiency
 def calculate_efficiency():
     city_name = city_entry.get()
     power_output = float(power_entry.get())
     panel_area = float(area_entry.get())
-    
+
     if not city_name or not power_output or not panel_area:
-        messagebox.showerror("Input Error", "Please fill in all the fields!")
+        messagebox.showerror("Input Error", "All the fields are not entered kindly re-check and enter")
         return
-    
-    api_key = "YOUR_API_KEY"  # Replace with your actual OpenWeatherMap API key
-    weather_data = get_weather_data(api_key, city_name)
-    
+
+    api_key = "mykey"
+    weather_data = getweatherdata(api_key, city_name)
+
     if weather_data:
         efficiency = calculate_solar_efficiency(power_output, weather_data['solar_irradiance'], panel_area)
-        
+
         result_label.config(text=f"Solar Panel Efficiency: {efficiency:.2f}%")
         weather_label.config(
             text=f"Weather Data for {city_name}:\n"
@@ -56,37 +60,46 @@ def calculate_efficiency():
     else:
         messagebox.showerror("Error", "Failed to fetch weather data. Please check the city name or API key.")
 
+
 # Setting up the GUI
 root = tk.Tk()
 root.title("Solar Panel Efficiency Calculator")
-root.geometry("400x400")
+root.geometry("800x600")
+
+# Load the background image
+image = Image.open("background_image.png")  # Add the path to your image file
+bg_image = ImageTk.PhotoImage(image)
+
+# Create a Label widget to display the background image
+background_label = tk.Label(root, image=bg_image)
+background_label.place(x=0, y=0, relwidth=1, relheight=1)  # Make the label cover the entire window
 
 # Labels and Entry fields
-city_label = tk.Label(root, text="Enter City Name:")
-city_label.pack(pady=10)
-city_entry = tk.Entry(root, width=30)
-city_entry.pack(pady=5)
+city_label = tk.Label(root, text="Enter City Name:", bg="lightblue")
+city_label.place(relx=0.1, rely=0.1)  # Using place to set widget locations
+city_entry = tk.Entry(root, width=30, bg="orange")
+city_entry.place(relx=0.5, rely=0.1)
 
-power_label = tk.Label(root, text="Power Output (W):")
-power_label.pack(pady=10)
-power_entry = tk.Entry(root, width=30)
-power_entry.pack(pady=5)
+power_label = tk.Label(root, text="Power Output (W):", bg="lightblue")
+power_label.place(relx=0.1, rely=0.2)
+power_entry = tk.Entry(root, width=30, bg="white", fg="darkblue")
+power_entry.place(relx=0.5, rely=0.2)
 
-area_label = tk.Label(root, text="Panel Area (m²):")
-area_label.pack(pady=10)
-area_entry = tk.Entry(root, width=30)
-area_entry.pack(pady=5)
+area_label = tk.Label(root, text="Panel Area (m²):", bg="lightblue")
+area_label.place(relx=0.1, rely=0.3)
+area_entry = tk.Entry(root, width=30, bg="green")
+area_entry.place(relx=0.5, rely=0.3)
 
 # Button to calculate efficiency
 calculate_button = tk.Button(root, text="Calculate Efficiency", command=calculate_efficiency)
-calculate_button.pack(pady=20)
+calculate_button.place(relx=0.4, rely=0.4)
 
 # Result labels
-result_label = tk.Label(root, text="")
-result_label.pack(pady=10)
+result_label = tk.Label(root, text="", bg="lightblue")
+result_label.place(relx=0.3, rely=0.5)
 
-weather_label = tk.Label(root, text="")
-weather_label.pack(pady=10)
+weather_label = tk.Label(root, text="", bg="lightblue")
+weather_label.place(relx=0.3, rely=0.6)
 
 # Start the GUI loop
 root.mainloop()
