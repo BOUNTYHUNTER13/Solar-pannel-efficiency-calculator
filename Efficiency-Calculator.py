@@ -62,9 +62,9 @@ def calculate_efficiency():
 
 
 # Setting up the GUI
-root = tk.Tk()
-root.title("Solar Panel Efficiency Calculator")
-root.geometry("800x600")
+window = tk.Tk()
+window.title("Solar Panel Efficiency Calculator")
+window.geometry("800x600")
 
 # Load the background image
 image = Image.open("C:\\Users\\HP\\Pictures\\1.jpg")  # Add the path to your image file
@@ -111,4 +111,4 @@ weather_label.config(font=("Helevetica bold",20))
 weather_label.place(relx=0.3, rely=0.6)
 
 # Start the GUI loop
-root.mainloop()
+window.mainloop()
